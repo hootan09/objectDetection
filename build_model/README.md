@@ -2,32 +2,25 @@
 
 mkdir ~/github
 
-
 sudo apt-get install -y pyqt4-dev-tools
-
 
 pip install lxml
 
 cd ~/github
 
-
 git clone https://github.com/tzutalin/labelImg
 
 cd ~/github/labelImg
 
-
 make qt5py3
 
-
 cd ~/github/labelImg
-
 
 ./labelImg.py
 
 ----------------------------------------
 
-install protobuf3 on ubuntu
-
+## install protobuf3 on ubuntu
 # Make sure you grab the latest version
 curl -OL https://github.com/google/protobuf/releases/download/v3.2.0/protoc-3.2.0-linux-x86_64.zip
 
@@ -46,6 +39,7 @@ sudo chwon [user] /usr/local/bin/protoc
 sudo chwon -R [user] /usr/local/include/google
 
 -----------------------------------------------------------
+# install dependency
 pip install tensorflow==1.15.0
 
 pip install tf_slim
