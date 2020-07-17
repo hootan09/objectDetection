@@ -16,8 +16,8 @@
     <!-- <script src="https://cdn.jsdelivr.net/npm/@cloud-annotations/models@0.1.1"></script> -->
     <script src="/models@0.1.1"></script> 
     
-    
-    <img width="600" height="400" style="position: fixed;" id="img" src="car1.jpg" alt="cat">
+    <!-- 10,11,19 -->
+    <img width="600" height="400" style="position: fixed;" id="img" src="19.jpg" alt="cat">
     
     <img id="loading" width="600" height="400" style="position: fixed;" src="loading.gif" alt="loading">
     
@@ -32,7 +32,7 @@
         const canvas = document.getElementById("canvas");
 
         // Model from: https://github.com/tensorflow/tfjs-models/tree/master/coco-ssd
-        models.load("/model_web").then((model) => {
+        models.load("/model_web2").then((model) => {
           
           document.getElementById("loading").style.visibility = "hidden";
           detectFrame(model)
@@ -61,7 +61,7 @@
           const label = `${prediction.class}: ${prediction.score.toFixed(2)}`;
           // Draw the bounding box.
           ctx.strokeStyle = "#FFFF3F";
-          ctx.lineWidth = 5;
+          ctx.lineWidth = 2;
           ctx.strokeRect(x, y, width, height);
           // Draw the label background.
           ctx.fillStyle = "#FFFF3F";

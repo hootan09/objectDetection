@@ -59,7 +59,7 @@
 
       video.addEventListener("loadeddata", function () {
         // Model from: https://github.com/tensorflow/tfjs-models/tree/master/coco-ssd
-        models.load("/model_web").then((model) => {
+        models.load("/model_web2").then((model) => {
           document.getElementById("loading").style.visibility = "hidden";
           detectFrame(model)
           });
