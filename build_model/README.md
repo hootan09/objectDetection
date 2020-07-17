@@ -1,19 +1,31 @@
 ### labelIMG
 
 mkdir ~/github
+
+
 sudo apt-get install -y pyqt4-dev-tools
+
+
 pip install lxml
 
 cd ~/github
+
+
 git clone https://github.com/tzutalin/labelImg
 
 cd ~/github/labelImg
+
+
 make qt5py3
 
+
 cd ~/github/labelImg
+
+
 ./labelImg.py
 
 ----------------------------------------
+
 install protobuf3 on ubuntu
 
 # Make sure you grab the latest version
@@ -30,13 +42,17 @@ sudo mv protoc3/include/* /usr/local/include/
 
 # Optional: change owner
 sudo chwon [user] /usr/local/bin/protoc
+
 sudo chwon -R [user] /usr/local/include/google
 
 -----------------------------------------------------------
 pip install tensorflow==1.15.0
+
 pip install tf_slim
+
 pip install --no-deps tensorflowjs==1.4.0
 
 pip install pycocotools
+
 pip install tensorflow_hub
 
