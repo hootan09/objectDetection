@@ -46,7 +46,10 @@ pip install tf_slim
 
 pip install --no-deps tensorflowjs==1.4.0
 
+pip install tensorflow_hub
+
+sudo apt install build-essential
+
 pip install pycocotools
 
-pip install tensorflow_hub
 
