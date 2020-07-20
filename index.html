@@ -7,17 +7,20 @@
       content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no, user-scalable=no"
     />
     <title>Object Detection</title>
-  </head>
-  <h3>
-    <a href="/camera.html">Using camera</a>
-  </h3>
-  <br>
-  <body>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/@cloud-annotations/models@0.1.1"></script> -->
     <script src="/models@0.1.1"></script> 
-    
+  </head>
+  <body>
+    <h3>
+      <a href="/camera.html">Using camera</a>
+      <br>
+      <br>
+      <br>
+      <input type="file" name="button" id="buttonImage" onchange="showImage()"  accept="image/*">
+    </h3>
+    <br>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@cloud-annotations/models@0.1.1"></script> -->
     <!-- 10,11,19 -->
-    <img width="800" height="600" style="position: fixed;" id="img" src="pic/2.jpg" alt="cat">
+    <img width="800" height="600" style="position: fixed;" id="img" src="pic/10.jpg" alt="cat">
     
     <img id="loading" width="800" height="600" style="position: fixed;" src="loading.gif" alt="loading">
     
@@ -31,11 +34,29 @@
         const img = document.getElementById("img");
         const canvas = document.getElementById("canvas");
 
+        function showImage(){
+          var oFReader = new FileReader();
+        oFReader.readAsDataURL(document.getElementById("buttonImage").files[0]);
+
+        oFReader.onload = function (oFREvent) {
+              //show image in img tag
+              document.getElementById("img").src = oFREvent.target.result;
+
+              //clear canvas
+              const ctx = canvas.getContext("2d");
+              ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+              //detect aganin
+              models.load("/model_web4").then((model) => {
+                detectFrame(model);
+            });
+          };
+        }
+
         // Model from: https://github.com/tensorflow/tfjs-models/tree/master/coco-ssd
         models.load("/model_web4").then((model) => {
-          
           document.getElementById("loading").style.visibility = "hidden";
-          detectFrame(model)
+              detectFrame(model);
           });
         
 
