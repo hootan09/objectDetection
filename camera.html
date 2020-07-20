@@ -11,23 +11,23 @@
   <body>
     <!-- <script src="https://cdn.jsdelivr.net/npm/@cloud-annotations/models@0.1.1"></script> -->
     <script src="/models@0.1.1"></script>
-    <button onclick="useRearCamera()">Use Rear Camera</button>
+    <!-- <button onclick="useRearCamera()">Use Rear Camera</button> -->
     <br>
     <video
       id="video"
-      width="600"
-      height="400"
+      width="800"
+      height="600"
       style="position: fixed;"
       muted
       controls
     ></video>
     
-    <img id="loading" width="600" height="400" style="position: fixed;" src="loading.gif" alt="loading">
+    <img id="loading" width="800" height="600" style="position: fixed;" src="loading.gif" alt="loading">
 
     <canvas
       id="canvas"
-      width="600"
-      height="400"
+      width="800"
+      height="600"
       style="position: fixed;"
     ></canvas>
     <script>
@@ -37,29 +37,36 @@
     // Get access to the camera!
     if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         // Not adding `{ audio: true }` since we only want video now
-        navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+        navigator.mediaDevices.getUserMedia(
+          { 
+            video: 
+            {    
+              width: 800,
+              height: 600,
+              facingMode: "environment" 
+            } 
+          }).then(function(stream) {
             //video.src = window.URL.createObjectURL(stream);
             console.log(stream);
             video.srcObject = stream;
             video.play();
         });
     }
-
-    function useRearCamera(){
-        if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-        // Not adding `{ audio: true }` since we only want video now
-        navigator.mediaDevices.getUserMedia({ video: { facingMode: { exact: "environment" }} }).then(function(stream) {
-            //video.src = window.URL.createObjectURL(stream);
-            console.log(stream);
-            video.srcObject = stream;
-            video.play();
-        });
-    }
-    }
+    // function useRearCamera(){
+    //     if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    //     // Not adding `{ audio: true }` since we only want video now
+    //     navigator.mediaDevices.getUserMedia({ video: { facingMode: { exact: "environment" }} }).then(function(stream) {
+    //         //video.src = window.URL.createObjectURL(stream);
+    //         console.log(stream);
+    //         video.srcObject = stream;
+    //         video.play();
+    //     });
+    // }
+    // }
 
       video.addEventListener("loadeddata", function () {
         // Model from: https://github.com/tensorflow/tfjs-models/tree/master/coco-ssd
-        models.load("/model_web2").then((model) => {
+        models.load("/model_web4").then((model) => {
           document.getElementById("loading").style.visibility = "hidden";
           detectFrame(model)
           });

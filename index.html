@@ -17,14 +17,14 @@
     <script src="/models@0.1.1"></script> 
     
     <!-- 10,11,19 -->
-    <img width="600" height="400" style="position: fixed;" id="img" src="19.jpg" alt="cat">
+    <img width="800" height="600" style="position: fixed;" id="img" src="pic/2.jpg" alt="cat">
     
-    <img id="loading" width="600" height="400" style="position: fixed;" src="loading.gif" alt="loading">
+    <img id="loading" width="800" height="600" style="position: fixed;" src="loading.gif" alt="loading">
     
     <canvas
       id="canvas"
-      width="600"
-      height="400"
+      width="800"
+      height="600"
       style="position: fixed;"
     ></canvas>
     <script>
@@ -32,7 +32,7 @@
         const canvas = document.getElementById("canvas");
 
         // Model from: https://github.com/tensorflow/tfjs-models/tree/master/coco-ssd
-        models.load("/model_web2").then((model) => {
+        models.load("/model_web4").then((model) => {
           
           document.getElementById("loading").style.visibility = "hidden";
           detectFrame(model)
