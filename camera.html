@@ -12,6 +12,7 @@
     <!-- <script src="https://cdn.jsdelivr.net/npm/@cloud-annotations/models@0.1.1"></script> -->
     <script src="/models@0.1.1"></script>
     <!-- <button onclick="useRearCamera()">Use Rear Camera</button> -->
+    <h1 id="loading">Downloading Model Please Wait ...</h1>
     <br>
     <video
       id="video"
@@ -22,8 +23,6 @@
       controls
     ></video>
     
-    <img id="loading" width="800" height="600" style="position: fixed;" src="loading.gif" alt="loading">
-
     <canvas
       id="canvas"
       width="800"
@@ -66,7 +65,7 @@
 
       video.addEventListener("loadeddata", function () {
         // Model from: https://github.com/tensorflow/tfjs-models/tree/master/coco-ssd
-        models.load("/model_web4").then((model) => {
+        models.load("/model_web5").then((model) => {
           document.getElementById("loading").style.visibility = "hidden";
           detectFrame(model)
           });

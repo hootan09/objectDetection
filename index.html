@@ -17,12 +17,11 @@
       <br>
       <input type="file" name="button" id="buttonImage" onchange="showImage()"  accept="image/*">
     </h3>
+    <h1 id="loading">Downloading Model Please Wait ...</h1>
     <br>
     <!-- <script src="https://cdn.jsdelivr.net/npm/@cloud-annotations/models@0.1.1"></script> -->
     <!-- 10,11,19 -->
     <img width="800" height="600" style="position: fixed;" id="img" src="pic/10.jpg" alt="cat">
-    
-    <img id="loading" width="800" height="600" style="position: fixed;" src="loading.gif" alt="loading">
     
     <canvas
       id="canvas"
@@ -47,14 +46,14 @@
               ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
               //detect aganin
-              models.load("/model_web4").then((model) => {
+              models.load("/model_web5").then((model) => {
                 detectFrame(model);
             });
           };
         }
 
         // Model from: https://github.com/tensorflow/tfjs-models/tree/master/coco-ssd
-        models.load("/model_web4").then((model) => {
+        models.load("/model_web5").then((model) => {
           document.getElementById("loading").style.visibility = "hidden";
               detectFrame(model);
           });
