@@ -12,12 +12,12 @@
     <!-- <script src="https://cdn.jsdelivr.net/npm/@cloud-annotations/models@0.1.1"></script> -->
     <script src="/models@0.1.1"></script>
     <!-- <button onclick="useRearCamera()">Use Rear Camera</button> -->
-    <h1 id="loading">Downloading Model Please Wait ...</h1>
+    <h2 id="loading">Downloading Model Please Wait ...</h2>
     <br>
     <video
       id="video"
-      width="800"
-      height="600"
+      width="320"
+      height="480"
       style="position: fixed;"
       muted
       controls
@@ -25,8 +25,8 @@
     
     <canvas
       id="canvas"
-      width="800"
-      height="600"
+      width="320"
+      height="480"
       style="position: fixed;"
     ></canvas>
     <script>
@@ -40,8 +40,8 @@
           { 
             video: 
             {    
-              width: 800,
-              height: 600,
+              width: 320,
+              height: 480,
               facingMode: "environment" 
             } 
           }).then(function(stream) {
@@ -65,7 +65,7 @@
 
       video.addEventListener("loadeddata", function () {
         // Model from: https://github.com/tensorflow/tfjs-models/tree/master/coco-ssd
-        models.load("/model_web5").then((model) => {
+        models.load("/model_web6").then((model) => {
           document.getElementById("loading").style.visibility = "hidden";
           detectFrame(model)
           });
@@ -86,7 +86,7 @@
         const font = "16px sans-serif";
         ctx.font = font;
         ctx.textBaseline = "top";
-        
+
         if(predictions.length == 0){
           showmessage('Not Found!!');
           return;
