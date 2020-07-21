@@ -86,6 +86,11 @@
         const font = "16px sans-serif";
         ctx.font = font;
         ctx.textBaseline = "top";
+        
+        if(predictions.length == 0){
+          showmessage('Not Found!!');
+          return;
+        }
         predictions.forEach((prediction) => {
           const x = prediction.bbox[0];
           const y = prediction.bbox[1];
@@ -113,6 +118,20 @@
         });
       };
 
+      function showmessage(message = ''){
+        const ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        // Font options.
+        const font = "40px sans-serif";
+        ctx.font = font;
+        ctx.textBaseline = "top";
+        const x = 0;
+          const y = 0;
+          const label = `${message}`;
+          // Draw the text last to ensure it's on top.
+          ctx.fillStyle = "#ff3300";
+          ctx.fillText(label, x, y);
+      }
     </script>
   </body>
 </html>

@@ -7,6 +7,7 @@
       content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no, user-scalable=no"
     />
     <title>Object Detection</title>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@cloud-annotations/models@0.1.1"></script> -->
     <script src="/models@0.1.1"></script> 
   </head>
   <body>
@@ -19,7 +20,6 @@
     </h3>
     <h1 id="loading">Downloading Model Please Wait ...</h1>
     <br>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/@cloud-annotations/models@0.1.1"></script> -->
     <!-- 10,11,19 -->
     <img width="800" height="600" style="position: fixed;" id="img" src="pic/10.jpg" alt="cat">
     
@@ -32,7 +32,7 @@
     <script>
         const img = document.getElementById("img");
         const canvas = document.getElementById("canvas");
-
+        var model;
         function showImage(){
           var oFReader = new FileReader();
         oFReader.readAsDataURL(document.getElementById("buttonImage").files[0]);
@@ -73,6 +73,10 @@
         ctx.font = font;
         ctx.textBaseline = "top";
         //multi predections segment
+        if(predictions.length == 0){
+          showmessage('Not Found!!');
+          return;
+        }
         predictions.forEach((prediction) => {
           const x = prediction.bbox[0];
           const y = prediction.bbox[1];
@@ -99,6 +103,21 @@
           ctx.fillText(label, x, y);
         });
       };
+
+      function showmessage(message = ''){
+        const ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        // Font options.
+        const font = "40px sans-serif";
+        ctx.font = font;
+        ctx.textBaseline = "top";
+        const x = 0;
+          const y = 0;
+          const label = `${message}`;
+          // Draw the text last to ensure it's on top.
+          ctx.fillStyle = "#ff3300";
+          ctx.fillText(label, x, y);
+      }
     </script>
   </body>
 </html>
