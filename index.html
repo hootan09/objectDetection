@@ -43,14 +43,14 @@
               ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
               //detect aganin
-              models.load("/model_web6").then((model) => {
+              models.load("/model_web").then((model) => {
                 detectFrame(model);
             });
           };
         }
 
         // Model from: https://github.com/tensorflow/tfjs-models/tree/master/coco-ssd
-        models.load("/model_web6").then((model) => {
+        models.load("/model_web").then((model) => {
           document.getElementById("loading").style.visibility = "hidden";
               detectFrame(model);
           });
