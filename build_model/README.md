@@ -1,3 +1,5 @@
+this section works with anaconda3 and jupyter notebook for Train and build and convert ssd mobilenet for web
+
 ### labelIMG
 
 mkdir ~/github
