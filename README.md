@@ -5,7 +5,7 @@ ssd_mobilenet camera and image object detection using purejs or nodejs and train
 
 https://github.com/hootan09/objectDetection/tree/master/public
 
-### for Train and convert mobilenet for use in web use link bellow
+### for Train and convert mobilenet ***(using python3)*** for use in web use link bellow
 
 https://github.com/hootan09/objectDetection/tree/master/build_model
 
