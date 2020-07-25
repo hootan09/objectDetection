@@ -69,7 +69,7 @@ io.on('connection',async function (socket) {
 });
 
 
-server.listen(3000 , async () =>{
+server.listen(5000 , async () =>{
     mn_model = await loadModel('./public/model_web');
-    console.log('server listening on port 3000')
+    console.log('server listening on port 5000')
 });
