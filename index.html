@@ -1,70 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no, user-scalable=no"
-    />
-    <title>Object Detection</title>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/@cloud-annotations/models@0.1.1"></script> -->
-    <script src="/models@0.1.1"></script> 
-  </head>
-  <body style="overflow: visible">
-    <h3>
-      <a href="/camera.html">Using camera</a>
-      <br><br>
-      <input type="file" name="button" id="buttonImage" onchange="showImage()"  accept="image/*">
-    </h3>
-    <h2 id="loading">Downloading Model Please Wait ...</h2>
-    <!-- 10,11,19 -->
-    <img width="320" height="480" style="position: fixed;" id="img" src="pic/10.jpg" alt="cat">
-    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arka Deep Learning</title>
+</head>
+<body>
+    <input type="file" id="file" onchange="previewFile()"><br><br>
+    <img src="upload.png" width="320" height="480" style="position: fixed;"  alt="Image preview..." onclick="document.getElementById('file').click()">
     <canvas
       id="canvas"
       width="320"
       height="480"
       style="position: fixed;"
     ></canvas>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
     <script>
-        const img = document.getElementById("img");
-        const canvas = document.getElementById("canvas");
-        var model;
-        function showImage(){
-          var oFReader = new FileReader();
-        oFReader.readAsDataURL(document.getElementById("buttonImage").files[0]);
+        const socket = io.connect(window.location.origin);
 
-        oFReader.onload = function (oFREvent) {
-              //show image in img tag
-              document.getElementById("img").src = oFREvent.target.result;
+        socket.on('response', (data)=>{
+          console.log(data);
+            renderPredictions(data);
+        })
+    </script>
+    <script>
+        function previewFile() {
+        const preview = document.querySelector('img');
+        const file = document.querySelector('input[type=file]').files[0];
+        const reader = new FileReader();
 
-              //clear canvas
-              const ctx = canvas.getContext("2d");
-              ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        reader.addEventListener("load", function () {
+            preview.src = reader.result;
+            base64Img = reader.result.replace("data:image/jpeg;base64,", "");
+            // console.log(base64Img);
+            socket.emit('request', base64Img);
+        }, false);
 
-              //detect aganin
-              models.load("/model_web").then((model) => {
-                detectFrame(model);
-            });
-          };
+        if (file) {
+            reader.readAsDataURL(file);
         }
+        }
+    </script>
+    <script>
+        const renderPredictions = (predictions) => {
+        clearCanvas()
 
-        // Model from: https://github.com/tensorflow/tfjs-models/tree/master/coco-ssd
-        models.load("/model_web").then((model) => {
-          document.getElementById("loading").style.visibility = "hidden";
-              detectFrame(model);
-          });
-        
-
-        const detectFrame = async (model) => {
-            const predictions = await model.detect(img);
-            console.log(predictions);
-            renderPredictions(predictions);
-        };
-
-      const renderPredictions = (predictions) => {
         const ctx = canvas.getContext("2d");
-        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         // Font options.
         const font = "16px sans-serif";
         ctx.font = font;
@@ -102,9 +84,9 @@
       };
 
       function showmessage(message = ''){
-        const ctx = canvas.getContext("2d");
-        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        clearCanvas()
         // Font options.
+        const ctx = canvas.getContext("2d");
         const font = "40px sans-serif";
         ctx.font = font;
         ctx.textBaseline = "top";
@@ -115,6 +97,11 @@
           ctx.fillStyle = "#ff3300";
           ctx.fillText(label, x, y);
       }
+
+      function clearCanvas(){
+        const ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+      }
     </script>
-  </body>
+</body>
 </html>

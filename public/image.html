@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no, user-scalable=no"
+    />
+    <title>Object Detection</title>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@cloud-annotations/models@0.1.1"></script> -->
+    <script src="/models@0.1.1"></script> 
+  </head>
+  <body style="overflow: visible">
+    <h3>
+      <a href="/camera.html">Using camera</a>
+      <br><br>
+      <input type="file" name="button" id="buttonImage" onchange="showImage()"  accept="image/*">
+    </h3>
+    <h2 id="loading">Downloading Model Please Wait ...</h2>
+    <!-- 10,11,19 -->
+    <img width="320" height="480" style="position: fixed;" id="img" src="pic/10.jpg" alt="cat">
+    
+    <canvas
+      id="canvas"
+      width="320"
+      height="480"
+      style="position: fixed;"
+    ></canvas>
+    <script>
+        const img = document.getElementById("img");
+        const canvas = document.getElementById("canvas");
+        var model;
+        function showImage(){
+          var oFReader = new FileReader();
+        oFReader.readAsDataURL(document.getElementById("buttonImage").files[0]);
+
+        oFReader.onload = function (oFREvent) {
+              //show image in img tag
+              document.getElementById("img").src = oFREvent.target.result;
+
+              //clear canvas
+              const ctx = canvas.getContext("2d");
+              ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+              //detect aganin
+              models.load("/model_web").then((model) => {
+                detectFrame(model);
+            });
+          };
+        }
+
+        // Model from: https://github.com/tensorflow/tfjs-models/tree/master/coco-ssd
+        models.load("/model_web").then((model) => {
+          document.getElementById("loading").style.visibility = "hidden";
+              detectFrame(model);
+          });
+        
+
+        const detectFrame = async (model) => {
+            const predictions = await model.detect(img);
+            console.log(predictions);
+            renderPredictions(predictions);
+        };
+
+      const renderPredictions = (predictions) => {
+        const ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        // Font options.
+        const font = "16px sans-serif";
+        ctx.font = font;
+        ctx.textBaseline = "top";
+        //multi predections segment
+        if(predictions.length == 0){
+          showmessage('Not Found!!');
+          return;
+        }
+        predictions.forEach((prediction) => {
+          const x = prediction.bbox[0];
+          const y = prediction.bbox[1];
+          const width = prediction.bbox[2];
+          const height = prediction.bbox[3];
+          const label = `${prediction.class}: ${prediction.score.toFixed(2)}`;
+          // Draw the bounding box.
+          ctx.strokeStyle = "#FFFF3F";
+          ctx.lineWidth = 2;
+          ctx.strokeRect(x, y, width, height);
+          // Draw the label background.
+          ctx.fillStyle = "#FFFF3F";
+          const textWidth = ctx.measureText(label).width;
+          const textHeight = parseInt(font, 10); // base 10
+          ctx.fillRect(x, y, textWidth + 4, textHeight + 4);
+        });
+
+        predictions.forEach((prediction) => {
+          const x = prediction.bbox[0];
+          const y = prediction.bbox[1];
+          const label = `${prediction.class}: ${prediction.score.toFixed(2)}`;
+          // Draw the text last to ensure it's on top.
+          ctx.fillStyle = "#000000";
+          ctx.fillText(label, x, y);
+        });
+      };
+
+      function showmessage(message = ''){
+        const ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        // Font options.
+        const font = "40px sans-serif";
+        ctx.font = font;
+        ctx.textBaseline = "top";
+        const x = 0;
+          const y = 0;
+          const label = `${message}`;
+          // Draw the text last to ensure it's on top.
+          ctx.fillStyle = "#ff3300";
+          ctx.fillText(label, x, y);
+      }
+    </script>
+  </body>
+</html>

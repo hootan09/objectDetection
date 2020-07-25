@@ -1,0 +1,19 @@
+{
+  "name": "nodejs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@tensorflow/tfjs": "^2.0.1",
+    "@tensorflow/tfjs-node": "^2.0.1",
+    "express": "^4.17.1",
+    "jpeg-js": "^0.4.1",
+    "socket.io": "^2.3.0"
+  }
+}
