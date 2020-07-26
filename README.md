@@ -17,6 +17,7 @@ just run
 
 ```sh
 $npm i
+$npm rebuild @tensorflow/tfjs-node --build-from-source --unsafe-perm=true --allow-root
 $node app.js
 
 ```
